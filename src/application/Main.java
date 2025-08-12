@@ -13,7 +13,25 @@ public class Main {
 	private static final StudentManager studentManager = new StudentManager();
 
 	public static void main(String[] args) {
+		int option;
 
+		do {
+			printMenu();
+			option = readInt("Choose an option: ");
+			switch (option) {
+			case 1 -> addStudent();
+			case 2 -> listStudents();
+			case 3 -> searchStudentByName();
+			case 4 -> searchStudentById();
+			case 5 -> updateStudentGrades();
+			case 6 -> removeStudent();
+			case 7 -> calculateClassAverage();
+			case 0 -> System.out.println("Goodbye!");
+			default -> System.out.println("Invalid option! Try again.");
+			}
+		} while (option != 0);
+
+		scanner.close();
 	}
 
 	private static void printMenu() {
