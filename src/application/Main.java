@@ -18,16 +18,20 @@ public class Main {
 		do {
 			printMenu();
 			option = readInt("Choose an option: ");
-			switch (option) {
-			case 1 -> addStudent();
-			case 2 -> listStudents();
-			case 3 -> searchStudentByName();
-			case 4 -> searchStudentById();
-			case 5 -> updateStudentGrades();
-			case 6 -> removeStudent();
-			case 7 -> calculateClassAverage();
-			case 0 -> System.out.println("Goodbye!");
-			default -> System.out.println("Invalid option! Try again.");
+			try {
+				switch (option) {
+				case 1 -> addStudent();
+				case 2 -> listStudents();
+				case 3 -> searchStudentByName();
+				case 4 -> searchStudentById();
+				case 5 -> updateStudentGrades();
+				case 6 -> removeStudent();
+				case 7 -> calculateClassAverage();
+				case 0 -> System.out.println("Goodbye!");
+				default -> System.out.println("Invalid option! Try again.");
+				}
+			} catch (IllegalArgumentException e) {
+				System.out.println("Error: " + e.getMessage());
 			}
 		} while (option != 0);
 
@@ -77,9 +81,9 @@ public class Main {
 		} else {
 			System.out.println("Search results: ");
 			students.forEach(System.out::println);
+			}
 		}
-	}
-
+	
 	private static void searchStudentById() {
 		int id = readInt("\nEnter the student ID to search: ");
 
@@ -126,14 +130,27 @@ public class Main {
 	private static int readInt(String prompt) {
 		while (true) {
 			System.out.print(prompt);
-			return Integer.parseInt(scanner.nextLine());
+			try {
+				return Integer.parseInt(scanner.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid number, please enter an integer.");
+			}
 		}
 	}
 
 	private static double readDouble(String prompt) {
 		while (true) {
 			System.out.print(prompt);
-			return Double.parseDouble(scanner.nextLine());
+			try {
+				double input = Double.parseDouble(scanner.nextLine());
+				if (input < 0 || input > 10) {
+					System.out.println("Grade must be between 0 and 10. Try again.");
+				} else {
+					return input;
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid number! Please try again.");
+			}
 		}
 	}
 }
